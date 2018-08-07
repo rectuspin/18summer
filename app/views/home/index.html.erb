@@ -1,0 +1,29 @@
+<h1>Home#index</h1>
+
+
+<form action="/home/search" method="post" %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+    <input name="query" placeholder="찾고싶은 단어를 입력하세요" type="text" autocomplete="off">
+    <input type="submit" value="검색"><br>
+</form>     
+
+
+<% if user_signed_in? %>
+<%= current_user.email %>
+<%= link_to "로그아웃", destroy_user_session_path, method: :get%>
+<% else%>
+<%= link_to "로그인", new_user_session_path, method: :get%>
+<%= link_to "회원 가입",new_user_registration_path, method: :get%>
+<% end %><br><br>
+
+
+<%@posts.each do |x|%>
+    제목 : <%=x.title%><br>
+    내용 : <%=x.content%><br><br>
+    <a href="/home/destroy/<%=x.id%>">삭제</a><br>
+    <a href="/home/edit/<%=x.id%>">수정</a><br><br>
+    ----------------------------<br><br>
+<%end%>
+
+<a href="/home/new">새로운 글쓰기</a>
